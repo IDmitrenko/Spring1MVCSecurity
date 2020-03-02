@@ -14,17 +14,22 @@
 
 <html>
     <body>
+        <h1>Книга</h1>
         <form th:action="@{/books/add}" th:object="${book}" method="post">
-            Title         : <input type="text" th:field="*{title}"/>
-            <br>
-            Description   : <input type="text" th:field="*{description}"/>
-            <br>
-            Year of issue : <input type="text" th:field="*{yearOfIssue}"/>
-            <br>
-            <div class="submit">
-                <button name="addBook" type="submit">Add book</button>
+            <input type="text" hidden th:field="*{id}" />
+            <div class="form-group">
+                <label for="title">Название</label>
+                <input type="text" th:field="*{title}" class="form-control" id="title" aria-describedby="emailHelp" placeholder="Название книги">
             </div>
-
+            <div class="form-group">
+                <label for="description">Описание</label>
+                <input type="text" th:field="*{description}" class="form-control" id="description" placeholder="Описание">
+            </div>
+            <div class="form-group">
+                <label for="year">Год</label>
+                <input type="number" th:field="*{yearOfIssue}" min="0" max="9999" class="form-control" id="year" placeholder="Год">
+            </div>
+            <button type="submit" class="btn btn-primary">Добавить</button>
         </form>
     </body>
 </html>

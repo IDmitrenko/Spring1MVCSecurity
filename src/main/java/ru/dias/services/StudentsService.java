@@ -3,6 +3,7 @@ package ru.dias.services;
 import org.hibernate.annotations.Fetch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.dias.entities.Course;
 import ru.dias.entities.Student;
 import ru.dias.repositories.StudentsRepository;
 
@@ -14,9 +15,16 @@ import java.util.List;
 public class StudentsService {
     private StudentsRepository studentsRepository;
 
+    private CoursesService coursesService;
+
     @Autowired
     public void setStudentsRepository(StudentsRepository studentsRepository) {
         this.studentsRepository = studentsRepository;
+    }
+
+    @Autowired
+    public void setCoursesService(CoursesService coursesService) {
+        this.coursesService = coursesService;
     }
 
     public StudentsService() {
@@ -32,5 +40,16 @@ public class StudentsService {
 
     public void removeById(Long id) {
         studentsRepository.deleteById(id);
+    }
+
+    public List<Course> getCoursesByStudentId(Long id) {
+        return studentsRepository.findOneById(id).getCourses();
+    }
+
+    public List<Course> getMissingCoursesByStudentId(Long id) {
+        List<Course> courses = coursesService.getAllCoursesList();
+        List<Course> studentsCourses = studentsRepository.findOneById(id).getCourses();
+        courses.removeAll(studentsCourses);
+        return courses;
     }
 }

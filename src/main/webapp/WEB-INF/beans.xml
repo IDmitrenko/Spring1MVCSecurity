@@ -33,6 +33,11 @@
     </bean>
     <bean id="templateEngine" class="org.thymeleaf.spring5.SpringTemplateEngine">
         <property name="templateResolver" ref="templateResolver" />
+        <property name="additionalDialects">
+            <set>
+                <bean class="org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect"/>
+            </set>
+        </property>
     </bean>
     <bean class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
         <property name="templateEngine" ref="templateEngine" />
@@ -64,6 +69,7 @@
             <props>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL95Dialect</prop>
+                <!--<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>-->
             </props>
         </property>
 
